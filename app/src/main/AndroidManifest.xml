@@ -28,8 +28,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".Recognizer">
+            <intent-filter>
+                <action android:name="android.intent.action.RECOGNIZER"/>
+                <category android:name="android.intent.category.DEMO"/>
+            </intent-filter>
+        </activity>
         <activity android:name=".Synthesizer" />
-        <activity android:name=".Recognizer" />
         <activity android:name=".Understander"></activity>
     </application>
 

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">Echo</string>
+    <string name="recognizer_btn">语音转文字</string>
+    <string name="understander_btn">语音转语义</string>
+    <string name="synthesizer_btn">语音合成</string>
+
+    <string name="begin_talk">按住开始说话</string>
 </resources>
