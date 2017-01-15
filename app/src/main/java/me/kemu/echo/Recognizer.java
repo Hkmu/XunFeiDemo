@@ -18,6 +18,7 @@ import com.iflytek.cloud.SpeechConstant;
 import com.iflytek.cloud.SpeechError;
 import com.iflytek.cloud.SpeechRecognizer;
 import com.iflytek.cloud.RecognizerListener;
+import com.iflytek.cloud.ErrorCode;
 
 public class Recognizer extends AppCompatActivity implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener{
     SpeechRecognizer mIat = null;
@@ -53,9 +54,15 @@ public class Recognizer extends AppCompatActivity implements View.OnTouchListene
 
     @Override
     public boolean onLongClick(View v) {
+        int ret;
         switch (v.getId()) {
             case R.id.begin_talk:
-                mIat.startListening(mRecoListener);
+                ret = mIat.startListening(mRecoListener);
+                if (ret == ErrorCode.SUCCESS) {
+                    Toast.makeText(context, "识别成功", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(context, "识别失败，错误码 " + ret , Toast.LENGTH_SHORT).show();
+                }
                 Toast.makeText(context, "begin", Toast.LENGTH_LONG).show();
                 break;
         }
@@ -73,7 +80,7 @@ public class Recognizer extends AppCompatActivity implements View.OnTouchListene
     private void initRecoListener() {
         mRecoListener = new RecognizerListener() {
             @Override
-            public void onVolumeChanged(int i, byte[] bytes) {
+            public void onVolumeChanged(int volume, byte[] data) {
 
             }
 

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
@@ -36,7 +37,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void initSpeech() {
-        SpeechUtility.createUtility(context, SpeechConstant.APPID + appId);
+        StringBuffer param = new StringBuffer();
+        param.append(SpeechConstant.APPID + "=" + appId);
+        param.append(',');
+        param.append(SpeechConstant.ENGINE_MODE + "=" + SpeechConstant.MODE_MSC);
+
+        SpeechUtility.createUtility(context, param.toString());
     }
 
     @Override
