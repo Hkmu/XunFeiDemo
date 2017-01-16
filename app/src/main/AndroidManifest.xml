@@ -34,8 +34,18 @@
                 <category android:name="android.intent.category.DEMO"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Synthesizer" />
-        <activity android:name=".Understander"></activity>
+        <activity android:name=".Synthesizer">
+            <intent-filter>
+                <action android:name="android.intent.action.SYNTHESIZER"/>
+                <category android:name="android.intent.category.DEMO"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".Understander">
+            <intent-filter>
+                <action android:name="android.intent.action.UNDERSTANDER"/>
+                <category android:name="android.intent.category.DEMO"/>
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

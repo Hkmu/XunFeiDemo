@@ -20,6 +20,8 @@ import com.iflytek.cloud.SpeechRecognizer;
 import com.iflytek.cloud.RecognizerListener;
 import com.iflytek.cloud.ErrorCode;
 
+import org.json.JSONObject;
+
 public class Recognizer extends AppCompatActivity implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener{
     SpeechRecognizer mIat = null;
     Context context = Recognizer.this;
@@ -79,11 +81,6 @@ public class Recognizer extends AppCompatActivity implements View.OnTouchListene
 
     private void initRecoListener() {
         mRecoListener = new RecognizerListener() {
-            @Override
-            public void onVolumeChanged(int volume, byte[] data) {
-
-            }
-
             /**
              * 开始录音
              */
@@ -101,8 +98,19 @@ public class Recognizer extends AppCompatActivity implements View.OnTouchListene
             }
 
             @Override
-            public void onResult(RecognizerResult recognizerResult, boolean b) {
+            public void onResult(RecognizerResult results, boolean b) {
+//                JSONObject obj = new JSONObject(results);
+                Log.d(TAG, "onResult: " + results.getResultString());
+            }
 
+            /**
+             * 音量改变时的回调
+             * @param volume - 音量值,范围 0~30
+             * @param data
+             */
+            @Override
+            public void onVolumeChanged(int volume, byte[] data) {
+                Log.d(TAG, "current volume is " + volume);
             }
 
             @Override
