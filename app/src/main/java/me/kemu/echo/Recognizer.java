@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.iflytek.cloud.RecognizerResult;
@@ -20,13 +21,21 @@ import com.iflytek.cloud.SpeechRecognizer;
 import com.iflytek.cloud.RecognizerListener;
 import com.iflytek.cloud.ErrorCode;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Recognizer extends AppCompatActivity implements View.OnTouchListener, View.OnClickListener, View.OnLongClickListener{
     SpeechRecognizer mIat = null;
     Context context = Recognizer.this;
     Button beginTalk = null;
+    TextView textView = null;
+    List<RecognizerResult> results = new ArrayList<RecognizerResult>();
     RecognizerListener mRecoListener = null;
+
     final String TAG = "RecognizerTAG";
 
     @Override
@@ -35,6 +44,7 @@ public class Recognizer extends AppCompatActivity implements View.OnTouchListene
         setContentView(R.layout.activity_recognizer);
 
         beginTalk = (Button) findViewById(R.id.begin_talk);
+        textView = (TextView) findViewById(R.id.text_view);
 
         initSpeechRecognizer();
         initRecoListener();
@@ -43,9 +53,43 @@ public class Recognizer extends AppCompatActivity implements View.OnTouchListene
 //        beginTalk.setOnTouchListener(this);
     }
 
+    private void appendText() {
+        String text = "";
+
+        for (RecognizerResult result : results) {
+            String textStr = result.getResultString();
+//            Log.d(TAG, "appendText: " + result.getResultString());
+            try {
+                JSONObject resultObj = new JSONObject(textStr);
+                String ws = resultObj.getString("ws");
+                JSONArray sentences = new JSONArray(ws);
+
+                for (int i = 0; i < sentences.length(); i++) {
+                    String cwsStr = sentences.getString(i);
+                    JSONArray cws = new JSONArray(cwsStr);
+                    for (int j = 0; j < cws.length(); j++) {
+                        String word = cws.getString(j);
+                        Log.d(TAG, "word >>> " + word);
+                    }
+                }
+//                JSONObject sentenceObj = new JSONObject(sentence);
+//                JSONArray words = sentenceObj.getJSONArray("cw");
+//
+//                for (int i = 0; i < words.length(); i++) {
+//                    JSONObject obj = words.getJSONObject(i);
+//                    String word = obj.getString("w");
+//                    text += word;
+//                }
+
+            } catch (JSONException e) {
+                Log.e(TAG, "Unexpected JSON Exception", e);
+            }
+        }
+        textView.append("text");
+    }
+
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-//        Toast.makeText(context, "on touch", Toast.LENGTH_SHORT).show();
         return false;
     }
 
@@ -98,9 +142,13 @@ public class Recognizer extends AppCompatActivity implements View.OnTouchListene
             }
 
             @Override
-            public void onResult(RecognizerResult results, boolean b) {
-//                JSONObject obj = new JSONObject(results);
-                Log.d(TAG, "onResult: " + results.getResultString());
+            public void onResult(RecognizerResult result, boolean b) {
+//                Log.d(TAG, "onResult: " + result.getResultString());
+                results.add(result);
+                if (b) {
+                    appendText();
+                    results.clear();
+                }
             }
 
             /**
@@ -110,7 +158,7 @@ public class Recognizer extends AppCompatActivity implements View.OnTouchListene
              */
             @Override
             public void onVolumeChanged(int volume, byte[] data) {
-                Log.d(TAG, "current volume is " + volume);
+//                Log.d(TAG, "current volume is " + volume);
             }
 
             @Override

@@ -5,4 +5,10 @@
     <string name="synthesizer_btn">语音合成</string>
 
     <string name="begin_talk">按住开始说话</string>
+
+    <!--Toolbar 标题-->
+    <string name="main_title">选择功能</string>
+    <string name="recognizer_title">语音听写</string>
+    <string name="synthesizer_title">语音合成</string>
+    <string name="understander_title">命令词识别</string>
 </resources>

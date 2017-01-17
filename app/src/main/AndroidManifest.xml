@@ -21,26 +21,33 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".MainActivity"
+            android:label="@string/main_title">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Recognizer">
+        <activity
+            android:name=".Recognizer"
+            android:label="@string/recognizer_title">
             <intent-filter>
                 <action android:name="android.intent.action.RECOGNIZER"/>
                 <category android:name="android.intent.category.DEMO"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Synthesizer">
+        <activity
+            android:name=".Synthesizer"
+            android:label="@string/synthesizer_btn">
             <intent-filter>
                 <action android:name="android.intent.action.SYNTHESIZER"/>
                 <category android:name="android.intent.category.DEMO"/>
             </intent-filter>
         </activity>
-        <activity android:name=".Understander">
+        <activity
+            android:name=".Understander"
+            android:label="@string/understander_title">
             <intent-filter>
                 <action android:name="android.intent.action.UNDERSTANDER"/>
                 <category android:name="android.intent.category.DEMO"/>
